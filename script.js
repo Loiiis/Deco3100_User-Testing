@@ -237,55 +237,69 @@ Papa.parse("IRSAD_homeownership.csv", {
 
     complete: function(results){
 
-console.log("Ownership CSV:", results.data);
-        
         const clean = results.data.filter(row =>
-            row.Area && row.HomeOwnership
+            row.Area &&
+            row.IRSAD &&
+            row.HomeOwnership
         );
 
-        const areas = clean.map(row => row.Area);
+        const irsad = clean.map(row => Number(row.IRSAD));
         const ownership = clean.map(row => Number(row.HomeOwnership));
+        const areas = clean.map(row => row.Area);
 
-        const bar = {
+        const scatter = {
 
-            x: areas,
+            x: irsad,
             y: ownership,
 
-            type: "bar",
+            mode: "markers+text",
+            type: "scatter",
 
-            marker: {
-                color: "#98d4f7"
+            text: areas,
+            textposition: "top center",
+
+            textfont: {
+                size: 10
             },
 
-            text: ownership.map(v => v + "%"),
-            textposition: "outside",
+            marker: {
+                size: 12,
+                color: "#10b981",
+                opacity: 0.85
+            },
 
             hovertemplate:
-                "<b>%{x}</b><br>" +
+                "<b>%{text}</b><br>" +
+                "IRSAD: %{x}<br>" +
                 "Home Ownership: %{y}%<extra></extra>"
         };
 
         const layout = {
 
             title: {
-                text: "IRSAD VS Home Owenership",
-                font: { size: 18 }
+                text: "IRSAD vs Home Ownership",
+                font: {
+                    size: 18
+                }
             },
 
             xaxis: {
-                title: "IRSAD"
+                title: "IRSAD Score",
+                type: "linear"
             },
 
             yaxis: {
                 title: "Home Ownership (%)",
-                range: [0, 100]
+                range: [0, 80]
             },
+
+            hovermode: "closest",
 
             margin: {
                 l: 70,
-                r: 20,
+                r: 30,
                 t: 70,
-                b: 120
+                b: 60
             },
 
             plot_bgcolor: "#ffffff",
@@ -294,9 +308,11 @@ console.log("Ownership CSV:", results.data);
 
         Plotly.newPlot(
             "ownershipChart",
-            [bar],
+            [scatter],
             layout,
-            { responsive: true }
+            {
+                responsive: true
+            }
         );
     }
 });
