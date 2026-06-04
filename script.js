@@ -236,7 +236,7 @@ Papa.parse("IRSAD_homeownership.csv", {
     header: true,
 
     complete: function(results){
-
+console.log("Ownership CSV:", results.data);
         const clean = results.data.filter(row =>
             row.Area &&
             row.IRSAD &&
