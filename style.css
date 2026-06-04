@@ -1,0 +1,281 @@
+/* =========================
+   Global
+========================= */
+
+body{
+    margin:0;
+    padding:0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:#fafafa;
+    color:#222;
+    line-height:1.8;
+}
+
+header{
+    text-align:center;
+    padding:60px 20px 40px;
+    background:#1f2937;
+    color:white;
+}
+
+header h1{
+    font-size:3rem;
+    margin-bottom:10px;
+}
+
+header p{
+    font-size:1.2rem;
+    opacity:0.9;
+}
+
+.divider{
+
+    width:120px;
+
+    height:4px;
+
+    border:none;
+
+    background:#2563eb;
+
+    margin:60px auto;
+}
+
+.stat-container{
+
+    display:flex;
+
+    gap:20px;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    margin:40px 0;
+}
+
+.stat-card{
+
+    width:250px;
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    text-align:center;
+
+    box-shadow:
+    0 4px 15px rgba(0,0,0,.08);
+}
+
+.stat-card h2{
+
+    font-size:3rem;
+
+    color:#2563eb;
+
+    margin:0;
+}
+
+.chapter{
+
+    max-width:1100px;
+
+    margin:100px auto;
+
+    padding:0 20px;
+}
+
+/* =========================
+   Section Layout
+========================= */
+
+.intro-section,
+.chart-section,
+.section-text,
+.section-title{
+    max-width:1000px;
+    margin:auto;
+}
+
+.intro-section{
+    padding:40px 20px;
+}
+
+.section-title{
+    margin-top:50px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.section-text,
+.intro-text{
+    max-width:900px;
+    margin:20px auto;
+    font-size:1.1rem;
+    padding:0 20px;
+}
+
+/* =========================
+   Charts
+========================= */
+
+.chart-section{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:16px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+    transition:.3s;
+}
+
+.chart-section:hover{
+
+    transform:translateY(-5px);
+}
+
+canvas{
+    width:100% !important;
+    height:500px !important;
+}
+
+.chart-controls{
+
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.chart-controls button{
+
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    margin:0 5px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.chart-controls button:hover{
+    background:#1d4ed8;
+}
+
+canvas{
+    width:100% !important;
+    height:500px !important;
+}
+
+#priceIncomeChart,
+#educationChart{
+
+    width:100%;
+
+    height:500px;
+
+    min-height:500px;
+}
+
+
+.race-container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.track {
+    position: relative;
+    height: 180px;
+    background: linear-gradient(to right, #f8fafc, #eef2ff);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+/* A */
+.runnerA {
+    position: absolute;
+    top: 40px;
+    left: 0%;
+    transition: left 0.25s linear;
+    font-size: 18px;
+}
+
+/* B */
+.runnerB {
+    position: absolute;
+    top: 110px;
+    left: 0%;
+    transition: left 0.25s linear;
+    font-size: 18px;
+}
+
+/* money tag */
+.money {
+    font-size: 12px;
+    margin-left: 6px;
+    color: #374151;
+}
+
+/* house */
+.house {
+    position: absolute;
+    right: 10px;
+    top: 70px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* =========================
+   Headings
+========================= */
+
+h2{
+    color:#1f2937;
+}
+
+h3{
+    color:#374151;
+}
+
+/* =========================
+   Divider
+========================= */
+
+.section-title{
+    font-weight:700;
+}
+
+/* =========================
+   Conclusion Highlight
+========================= */
+
+.section-text:last-of-type{
+    margin-bottom:80px;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media(max-width:768px){
+
+    header h1{
+        font-size:2rem;
+    }
+
+    canvas{
+        height:350px !important;
+    }
+
+    .section-text,
+    .intro-text{
+        font-size:1rem;
+    }
+
+}

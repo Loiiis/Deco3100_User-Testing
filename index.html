@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ami vs Bella Race Simulator</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Who can buy the house first in Sydney?
+        </h1>
+
+        <p class="subtitle">
+            How social class shapes home ownership opportunities
+        </p>
+
+        <p class="hero-intro">
+            Rising house prices affect everyone, but not everyone starts from the same place.
+        </p>
+
+    </div>
+
+</header>
+
+<div class="intro-section">
+<h3 class="section-title">
+  Introduction
+</h3>
+
+  <p class="intro-text">
+  Sydney is one of Australia's most economically prosperous cities, yet significant social class
+  inequalities persist (Australian Bureau of Statistics [ABS], 2021). Social class influences an
+  individual's life chances, including access to education, employment, income, and housing (Weber, 1978).
+  </p>
+
+  <p class="intro-text">
+  In the housing market, property prices in Sydney have increased substantially over the past few decades,
+  making home ownership increasingly difficult for younger generations (CoreLogic, 2024). 
+  </p>
+
+  <p class="intro-text">
+  However, not everyone faces the same challenges in entering the housing market. Individuals from different
+  social classes possess unequal access to financial resources, educational opportunities, and family support,
+  all of which can influence their ability to purchase a home.</p>
+
+  <p class="intro-text">
+  By examining socioeconomic indicators and housing data across different areas of Sydney, this website explores
+   who can buy a house first in Sydney and how social class continues to shape home ownership opportunities in 
+   contemporary Australia.</p>
+
+</div>
+
+<hr class="divider">
+<section class="chapter">
+<h2 class="section-title">
+Part 1: The Housing Crisis in Sydney
+</h2>
+
+<h3 class="section-title">
+-	Why is buying a house becoming harder?
+</h3>
+</section>
+
+<p class="section-text">
+  
+  Housing prices in Sydney have risen substantially over the past several decades, 
+  significantly outpacing growth in household incomes and contributing to declining housing 
+  affordability among younger generations. 
+</p>
+
+<section class="chart-section">
+
+<div id="priceIncomeChart"></div>
+
+<div class="chart-controls">
+
+    <button onclick="playChart1()">▶ Play</button>
+    <button onclick="pauseChart1()">⏸ Pause</button>
+
+</div>
+
+</section>
+
+<p class="section-text">
+Housing prices have risen much faster than wages, making home ownership increasingly difficult 
+for younger generations.
+</p>
+
+<div class="stat-container">
+
+    <div class="stat-card">
+
+        <h2>50%</h2>
+
+        <p>
+        Home ownership rate<br>
+        Age 25–29 (1971)
+        </p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h2>36%</h2>
+
+        <p>
+        Home ownership rate<br>
+        Age 25–29 (2021)
+        </p>
+
+    </div>
+
+</div>
+
+<p class="section-text">
+Research also shows that parental financial support has become increasingly important for young Australians 
+entering the housing market (Parkinson et al., 2019). Young Australians today are often more dependent on 
+parental assistance to purchase a home than previous generations.</p>
+
+<p class="section-text">
+  However, not everyone receives the same financial assistance from their parents. 
+</p>
+
+
+<p class="section-text">Families from more affluent socioeconomic backgrounds are typically able to provide 
+  more financial support, while disadvantaged families usually have fewer resources. </p>
+
+<p class="section-text">
+  This raises an important question: Do all young people face the same challenges in buying a home?
+</p>
+
+<h2 class="section-title">
+Part 2: Different Starting Points
+</h2>
+
+<h3 class="section-title">
+Do all young people face the same challenges in buying a home?
+</h3>
+
+<p class="section-text">
+IRSAD (Index of Relative Socio-economic Advantage and Disadvantage) is a composite index developed by the Australian 
+Bureau of Statistics to measure the relative socioeconomic conditions of an area. It combines indicators such as:
+income, education, employment, and occupation to identify areas with higher levels of advantage or disadvantage
+</p>
+
+<p class="section-text">
+Does a higher IRSAD score correspond to higher educational attainment?</p>
+
+<section class="chart-section">
+
+<div id="educationChart"></div>
+
+</section>
+
+<p class="section-text">
+
+Residents in socioeconomically advantaged areas are more than twice as likely to hold a bachelor degree or higher 
+qualification than residents in disadvantaged areas. Higher educational attainment is associated with better 
+employment opportunities and higher incomes, increasing the capacity to enter the housing market.</p>
+
+<section class="chart-section">
+
+<div id="ownershipChart"></div>
+
+</section>
+
+<p class="section-text">
+Educational attainment and income explain part of the inequality in homeownership. 
+However, research suggests that family background continues to matter even after individuals achieve similar educational qualifications and earnings. 
+Access to family wealth can provide a significant advantage when purchasing a home.</p>
+
+<p class="section-text">
+If abilities are equal but family backgrounds differ, how does this affect homeownership?</p>
+
+<h2 class="section-title">
+Part 3: Family Background Matters
+</h2>
+
+<h3 class="section-title">
+What if two people have the same degrees, who can buy the house first?
+</h3>
+
+<p class="section-text">
+The research shows that intergenerational advantage, such as gifted deposits, will be a 
+big help for youth who need to buy a house. To understand the impact of family wealth, 
+imagine two individuals with identical education, occupations, and incomes.</p>
+
+<p class="section-text">
+What if two people have the same education, occupation, and income? Who can buy a home first</p>
+
+<section class="chart-section">
+
+<div class="race-container">
+
+    <div class="track">
+
+      <div id="runnerA" class="runner runnerA">
+    👩 A
+    <div class="money" id="moneyA"></div>
+</div>
+
+<div id="runnerB" class="runner runnerB">
+    👩 B
+    <div class="money" id="moneyB"></div>
+</div>
+
+        <div class="house">🏠 $3.5M</div>
+
+    </div>
+
+    <div class="chart-controls">
+        <button onclick="playRace()">▶ Play</button>
+        <button onclick="pauseRace()">⏸ Pause</button>
+    </div>
+
+</div>
+
+</section>
+
+<p class="section-text">
+This is Intergenerational Advantage: Wealth and housing opportunities are often passed from one generation to the next.</p>
+
+<div class="conclusion-box"></div>
+
+<h2 class="section-title">
+Conclusion
+</h2>
+
+<p class="section-text">
+In Sydney, young people from socioeconomically advantaged families are generally able to purchase homes 
+earlier than those from disadvantaged backgrounds. While rising house prices affect all Australians, 
+access to education, income, and intergenerational wealth provides some groups with a significant head 
+start. In contemporary Sydney, home ownership is shaped not only by individual effort, but also by the 
+social class into which a person is born.</p>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
