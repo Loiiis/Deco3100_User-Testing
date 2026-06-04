@@ -147,7 +147,7 @@ window.pauseChart1 = function(){
 // Chart 2:IRSAD VS Educational Attainment
 // ================================
 
-Papa.parse("irsad_education.csv", {
+Papa.parse("IRSAD_education.csv", {
 
     download: true,
     header: true,
@@ -228,7 +228,7 @@ Papa.parse("irsad_education.csv", {
 // Chart 3: IRSAD VS Home Ownership
 // ================================
 
-Papa.parse("irsad_homeownership.csv", {
+Papa.parse("IRSAD_homeownership.csv", {
 
     download: true,
     header: true,
