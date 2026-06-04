@@ -182,6 +182,12 @@ canvas{
     min-height:500px;
 }
 
+.Chart4-title{
+
+    text-align:center;
+
+    font-size:18px;
+}
 
 .race-container {
     max-width: 900px;
