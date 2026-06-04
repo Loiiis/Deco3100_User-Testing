@@ -154,6 +154,8 @@ Papa.parse("IRSAD_education.csv", {
 
     complete: function(results){
 
+console.log("Education CSV:", results.data);
+        
         const combined = results.data
             .map(row => ({
                 irsad: Number(row.IRSAD),
@@ -235,6 +237,8 @@ Papa.parse("IRSAD_homeownership.csv", {
 
     complete: function(results){
 
+console.log("Ownership CSV:", results.data);
+        
         const clean = results.data.filter(row =>
             row.Area && row.HomeOwnership
         );
