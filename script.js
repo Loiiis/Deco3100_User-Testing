@@ -201,7 +201,7 @@ console.log("Education CSV:", results.data);
             title: "IRSAD vs Educational Attainment",
 
             xaxis: {
-                title: "IRSAD (Low → High)",
+                title: "IRSAD Score",
                 type: "linear"
             },
 
