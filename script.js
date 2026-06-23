@@ -1,20 +1,39 @@
+/* =========================================================
+   DATA PIPELINE ARCHITECTURE
+
+   CSV FILES
+      ↓ (PapaParse)
+   JSON OBJECTS
+      ↓
+   DATA ARRAYS (years, prices, incomes)
+      ↓
+   VISUAL ENGINES (Plotly)
+      ↓
+   INTERACTIVE UI (buttons + animation)
+========================================================= */
+
 let chart1Playing = false;
 let chart1Interval = null;
 let chart1Index = 0;
 
-// ================================
-// Chart 1: House Price vs Income (FIXED)
-// ================================
+// =========================================================
+// CHART 1: TIME SERIES VISUALIZATION
+// PURPOSE:
+// Compare house price vs income over time
+// =========================================================
+
+// Step 1: Load CSV asynchronously
 
 Papa.parse("house_price_income.csv", {
 
-    download: true,
-    header: true,
+    download: true, // fetch file from server
+    header: true, // convert CSV → objects
 
     complete: function(results){
 
         console.log("CSV loaded:", results.data);
 
+// Step 2: Data cleaning (filter invalid rows)
         const clean = results.data.filter(r =>
             r.Year && r.HousePrice && r.AverageIncome
         );
@@ -24,10 +43,12 @@ Papa.parse("house_price_income.csv", {
             return;
         }
 
+        // Step 3: transform data → numeric arrays
         const years = clean.map(r => r.Year);
         const prices = clean.map(r => Number(r.HousePrice));
         const incomes = clean.map(r => Number(r.AverageIncome));
 
+        // Step 4: initialize visualization
         Plotly.newPlot(
     "priceIncomeChart",
     [   
@@ -64,11 +85,15 @@ title: {
     }
 );
 
+// Step 5: store globally for animation system
         // store data globally for animation
         window.chart1Data = { years, prices, incomes };
     }
 });
 
+// =========================================================
+// ANIMATION ENGINE (TIME-BASED LOOP)
+// =========================================================
 
 // ================================
 // PLAY
@@ -80,7 +105,7 @@ window.playChart1 = function(){
 
     if(!data) return;
 
-    if(chart1Playing) return;
+    if(chart1Playing) return; // prevent duplicate loops
 
     chart1Playing = true;
 
@@ -116,6 +141,11 @@ window.playChart1 = function(){
 
         chart1Index++;
 
+/* CORE IDEA:
+           Instead of redrawing full chart,
+           we gradually extend arrays (progressive disclosure)
+        */
+
         Plotly.restyle("priceIncomeChart",{
 
             x:[
@@ -147,15 +177,13 @@ window.pauseChart1 = function(){
 // Chart 2:IRSAD VS Educational Attainment
 // ================================
 
-Papa.parse("IRSAD_education.csv", {
+Papa.parse("irsad_education.csv", {
 
     download: true,
     header: true,
 
     complete: function(results){
 
-console.log("Education CSV:", results.data);
-        
         const combined = results.data
             .map(row => ({
                 irsad: Number(row.IRSAD),
@@ -230,13 +258,13 @@ console.log("Education CSV:", results.data);
 // Chart 3: IRSAD VS Home Ownership
 // ================================
 
-Papa.parse("IRSAD_homeownership.csv", {
+Papa.parse("irsad_homeownership.csv", {
 
     download: true,
     header: true,
 
     complete: function(results){
-console.log("Ownership CSV:", results.data);
+
         const clean = results.data.filter(row =>
             row.Area &&
             row.IRSAD &&
@@ -319,167 +347,329 @@ console.log("Ownership CSV:", results.data);
 
 
 // ============================
-// Chart 4 - Housing Race
+// Chart 4
 // ============================
+
+// =========================================================
+// INTERGENERATIONAL WEALTH SIMULATION MODEL
+// =========================================================
+
+/*
+CORE ASSUMPTION:
+wealth(t) = initial_deposit + income * time
+*/
+
 
 let raceInterval = null;
 let playing = false;
 
-// IMPORTANT: progress time (DO NOT reset on pause)
 let t = 0;
 
-// ============================
-// CONFIG
-// ============================
+const START_AGE = 25;
 
 const HOUSE_PRICE = 3500000;
-
-const depositA = 800000; // A advantage
+// Person A has the advantage of deposit from parental gift.
+const depositA = 700000;
+// Person B starts with no wealth
 const depositB = 0;
 
 const incomePerStep = 180000;
+
 const STEP_TIME = 200;
 
-// track width (%)
-const TRACK = 85;
 
 // ============================
-// UTIL
+// progress
 // ============================
 
-function progress(wealth) {
-    return Math.min(wealth / HOUSE_PRICE, 1);
+// convert wealth → normalized progress (0 to 1)
+function progress(wealth){
+
+    return Math.min(
+        wealth / HOUSE_PRICE,
+        1
+    );
 }
 
-// convert progress → position
-function toPos(p) {
-    return p * TRACK;
+
+// ============================
+// position
+// ============================
+
+// A: 5% -> 45%
+
+/*
+MAP:
+progress 0 → 5% (start)
+progress 1 → 45% (house)
+
+This is mathematical → visual transformation
+*/
+
+
+function posA(p){
+
+    return 5 + p * 40;
 }
 
+
+// B: 5% -> 45% (right side)
+
+function posB(p){
+
+    return 5 + p * 40;
+}
+
+
 // ============================
-// INIT (runs once)
+// init
 // ============================
 
-function initRace() {
+function initRace(){
 
-    const A = document.getElementById("runnerA");
-    const B = document.getElementById("runnerB");
+    const A =
+        document.getElementById("runnerA");
 
-    if (!A || !B) return;
+    const B =
+        document.getElementById("runnerB");
 
-    // initial wealth
-    const pA0 = progress(depositA);
-    const pB0 = progress(depositB);
+    if(!A || !B) return;
 
-    A.style.left = toPos(pA0) + "%";
-    B.style.left = toPos(pB0) + "%";
+    A.style.left =
+        posA(progress(depositA)) + "%";
+
+    A.style.right = "auto";
+
+    B.style.right =
+        posB(progress(depositB)) + "%";
+
+    B.style.left = "auto";
 
     setMoney();
 }
 
-function setMoney() {
 
-    const wealthA = depositA + t * incomePerStep;
-    const wealthB = depositB + t * incomePerStep;
+// ============================
+// update info
+// ============================
 
-    const mA = document.getElementById("moneyA");
-    const mB = document.getElementById("moneyB");
+function setMoney(){
 
-    if (mA) mA.innerText = `$${Math.round(wealthA).toLocaleString()} (deposit advantage)`;
-    if (mB) mB.innerText = `$${Math.round(wealthB).toLocaleString()} (no deposit)`;
+    const wealthA =
+        depositA + t * incomePerStep;
+
+    const wealthB =
+        depositB + t * incomePerStep;
+
+    document.getElementById("moneyA").innerText =
+        `A Wealth: $${Math.round(wealthA).toLocaleString()}`;
+
+    document.getElementById("moneyB").innerText =
+        `B Wealth: $${Math.round(wealthB).toLocaleString()}`;
+
+    const age =
+        START_AGE + Math.floor(t);
+
+    document.getElementById("ageA").innerText =
+        `Age ${age}`;
+
+    document.getElementById("ageB").innerText =
+        `Age ${age}`;
 }
 
+
 // ============================
-// PLAY (CONTINUE MODE)
+// play
 // ============================
 
-function playRace() {
+function playRace(){
 
-    if (playing) return;
+    const wealthA =
+        depositA + t * incomePerStep;
+
+    const wealthB =
+        depositB + t * incomePerStep;
+
+    if(
+        progress(wealthA) >= 1 ||
+        progress(wealthB) >= 1
+    ){
+        resetRace();
+    }
+
+    if(playing) return;
+
     playing = true;
 
-    const A = document.getElementById("runnerA");
-    const B = document.getElementById("runnerB");
+    const A =
+        document.getElementById("runnerA");
 
-    raceInterval = setInterval(() => {
+    const B =
+        document.getElementById("runnerB");
 
-        // time moves forward ONLY
+    raceInterval = setInterval(()=>{
+
         t += 0.4;
 
-        const wealthA = depositA + t * incomePerStep;
-        const wealthB = depositB + t * incomePerStep;
+        const wealthA =
+            depositA + t * incomePerStep;
 
-        const pA = progress(wealthA);
-        const pB = progress(wealthB);
+        const wealthB =
+            depositB + t * incomePerStep;
 
-        // update positions
-        A.style.left = toPos(pA) + "%";
-        B.style.left = toPos(pB) + "%";
+        const pA =
+            progress(wealthA);
+
+        const pB =
+            progress(wealthB);
+
+        A.style.left =
+            posA(pA) + "%";
+
+        B.style.right =
+            posB(pB) + "%";
 
         setMoney();
 
-        // =========================
-        // WIN CHECK
-        // =========================
+        const A_finish =
+            pA >= 1;
 
-        const A_finish = pA >= 1;
-        const B_finish = pB >= 1;
+        const B_finish =
+            pB >= 1;
 
-        if (A_finish || B_finish) {
+        if(
+            A_finish ||
+            B_finish
+        ){
 
-            clearInterval(raceInterval);
+            clearInterval(
+                raceInterval
+            );
+
             playing = false;
 
-            showResult(A, B, A_finish, B_finish);
+            showResult(
+                A,
+                B,
+                A_finish,
+                B_finish
+            );
         }
 
     }, STEP_TIME);
 }
 
+
 // ============================
-// PAUSE
+// pause
 // ============================
 
-function pauseRace() {
-    clearInterval(raceInterval);
+function pauseRace(){
+
+    clearInterval(
+        raceInterval
+    );
+
     playing = false;
 }
 
+
 // ============================
-// WIN DISPLAY (CLEAN RESET SAFE)
+// reset
 // ============================
 
-function showResult(A, B, A_finish, B_finish) {
+function resetRace(){
 
-    // remove old icons first (IMPORTANT FIX)
-    document.querySelectorAll(".result-icon").forEach(el => el.remove());
+    clearInterval(
+        raceInterval
+    );
 
-    function add(el, icon) {
-        const d = document.createElement("div");
-        d.className = "result-icon";
-        d.innerText = icon;
-        d.style.position = "absolute";
-        d.style.top = "-25px";
-        d.style.left = "10px";
-        d.style.fontSize = "20px";
+    playing = false;
+
+    t = 0;
+
+    document
+        .querySelectorAll(
+            ".result-icon"
+        )
+        .forEach(
+            el => el.remove()
+        );
+
+    initRace();
+}
+
+
+// ============================
+// result
+// ============================
+
+function showResult(
+    A,
+    B,
+    A_finish,
+    B_finish
+){
+
+    document
+        .querySelectorAll(
+            ".result-icon"
+        )
+        .forEach(
+            el => el.remove()
+        );
+
+    function add(el, icon){
+
+        const d =
+            document.createElement("div");
+
+        d.className =
+            "result-icon";
+
+        d.innerText =
+            icon;
+
         el.appendChild(d);
     }
 
-    if (A_finish && !B_finish) {
-        add(A, "🏆");
-        add(B, "😓");
+    if(
+        A_finish &&
+        !B_finish
+    ){
+
+        add(A,"🏆");
+        add(B,"😓");
     }
 
-    if (B_finish && !A_finish) {
-        add(B, "🏆");
-        add(A, "😓");
+    if(
+        B_finish &&
+        !A_finish
+    ){
+
+        add(B,"🏆");
+        add(A,"😓");
     }
 
-    if (A_finish && B_finish) {
-        add(A, "🏆");
-        add(B, "🏆");
+    if(
+        A_finish &&
+        B_finish
+    ){
+
+        add(A,"🏆");
+        add(B,"🏆");
     }
 }
+
+
+// ============================
+// start
+// ============================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initRace
+);
 
 // ============================
 // INIT RUN
