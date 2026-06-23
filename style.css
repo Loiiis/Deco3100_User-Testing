@@ -1,3 +1,13 @@
+/* =========================================================
+   CSS NOTATION (VISUAL SYSTEM DESIGN)
+   Purpose:
+   This stylesheet controls:
+   1. Layout hierarchy (spacing & structure)
+   2. Visual storytelling emphasis
+   3. Interactive feedback (hover, animation)
+========================================================= */
+
+
 /* =========================
    Global
 ========================= */
@@ -10,6 +20,12 @@ body{
     color:#222;
     line-height:1.8;
 }
+
+/* =========================
+   HERO VISUAL EMPHASIS
+   Purpose:
+   First impression + narrative dominance
+========================= */
 
 header{
     text-align:center;
@@ -118,9 +134,63 @@ header p{
     padding:0 20px;
 }
 
+.chart-hint {
+    font-size: 13px;
+    color: #6b7280;
+    text-align: center;
+    margin: 10px 0 15px 0;
+    font-style: italic;
+}
+
 /* =========================
    Charts
 ========================= */
+
+.key-insight{
+
+    max-width:850px;
+
+    margin:25px auto;
+
+    padding:15px 20px;
+
+    background:#f8fafc;
+
+    border-radius:8px;
+
+    font-weight:500;
+}
+
+.irsad-box{
+
+    max-width:900px;
+
+    margin:30px auto;
+
+    padding:20px;
+
+    background:#eff6ff;
+
+    border-left:6px solid #2563eb;
+
+    border-radius:10px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
+}
+
+.irsad-box h4{
+
+    margin-top:0;
+
+    color:#1d4ed8;
+}
+
+/* =========================
+   DATA VISUALIZATION CARDS
+   Purpose:
+   Separate charts visually from text
+========================= */
+
 
 .chart-section{
 
@@ -183,58 +253,183 @@ canvas{
 }
 
 .Chart4-title{
+    text-align:center;
+    font-size:18px;
+    margin-bottom:20px;
+}
+
+.race-container{
+    max-width:900px;
+    margin:40px auto;
+}
+
+.track{
+
+    position:relative;
+
+    height:180px;
+
+    background:linear-gradient(
+        to right,
+        #f8fafc,
+        #eef2ff
+    );
+
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+
+    overflow:hidden;
+}
+
+
+/* =====================
+   HOUSE
+===================== */
+
+.house{
+
+    position:absolute;
+
+    left:50%;
+    top:70px;
+
+    transform:translateX(-50%);
 
     text-align:center;
 
-    font-size:18px;
+    font-size:34px;
+
+    z-index:5;
 }
 
-.race-container {
-    max-width: 900px;
-    margin: 40px auto;
+.house-label{
+
+    font-size:13px;
+
+    margin-top:5px;
 }
 
-.track {
-    position: relative;
-    height: 180px;
-    background: linear-gradient(to right, #f8fafc, #eef2ff);
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    overflow: hidden;
+
+/* =====================
+   RUNNERS
+===================== */
+/* =========================
+   SIMULATION SYSTEM (RACE MODEL)
+   Concept:
+   CSS positions agents in 2D space,
+   JS updates positions dynamically.
+========================= */
+
+.runner{
+
+    position:absolute;
+
+    top:80px;
+
+    font-size:28px;
+
+    transition:all .25s linear;
+
+    z-index:10;
+
+    white-space:nowrap;
 }
 
-/* A */
-.runnerA {
-    position: absolute;
-    top: 40px;
-    left: 0%;
-    transition: left 0.25s linear;
-    font-size: 18px;
+.runnerA{
+    left:5%;
 }
 
-/* B */
-.runnerB {
-    position: absolute;
-    top: 110px;
-    left: 0%;
-    transition: left 0.25s linear;
-    font-size: 18px;
+.runnerB{
+    right:5%;
 }
 
-/* money tag */
-.money {
-    font-size: 12px;
-    margin-left: 6px;
-    color: #374151;
+
+/* =====================
+   AGE LABEL
+===================== */
+
+.age-label{
+
+    position:absolute;
+
+    top:-28px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:#555;
+
+    white-space:nowrap;
 }
 
-/* house */
-.house {
-    position: absolute;
-    right: 10px;
-    top: 70px;
-    font-size: 20px;
-    font-weight: bold;
+
+/* =====================
+   MONEY PANEL
+===================== */
+
+.wealth-panel{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:18px;
+
+    padding:0 10px;
+
+    font-size:16px;
+
+    font-weight:600;
+}
+
+
+/* =====================
+   BUTTONS
+===================== */
+
+.chart-controls{
+
+    text-align:center;
+
+    margin-top:25px;
+}
+
+.chart-controls button{
+
+    padding:10px 18px;
+
+    margin:0 6px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
+
+
+/* =====================
+   RESULT ICON
+===================== */
+
+.result-icon{
+
+    position:absolute;
+
+    top:-55px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:24px;
 }
 
 /* =========================
@@ -284,6 +479,24 @@ h3{
         font-size:1rem;
     }
 
+}
+
+
+.takeaway-box{
+
+    max-width:700px;
+
+    margin:50px auto;
+
+    padding:20px;
+
+    background:#dfecfe;
+
+    color:rgb(9, 9, 9);
+
+    text-align:center;
+
+    border-radius:15px;
 }
 
 .footer{
