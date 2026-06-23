@@ -1,7 +1,8 @@
-Area,IRSAD,BachelorRate
-Bankstown,950,22
-Fairfield,930,18
-Liverpool,970,25
-Ryde,1080,38
-Lane Cove,1140,50
-Waverley,1180,55
+Area,HomeOwnership,IRSAD
+Fairfield,40,830
+Liverpool,48,880
+Bankstown,50,910
+
+Ryde,58,1080
+Lane Cove,63,1150
+Waverley,67,1160
