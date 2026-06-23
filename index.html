@@ -1,18 +1,52 @@
+<!-- =========================================================
+    WEBSITE STRUCTURE NOTATION (HTML)
+    Purpose:
+    This HTML file defines the structure of a data-driven
+    storytelling website about housing inequality in Sydney.
+
+    It is NOT static content only:
+    It connects to JavaScript modules that generate:
+    - interactive charts (Plotly)
+    - animated simulation (race model)
+    - CSV-driven data visualisations (PapaParse)
+========================================================= -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Who can buy the house first in Sydney</title>
+
+<!-- =========================
+       EXTERNAL LIBRARIES (CORE ENGINE)
+       These libraries enable ALL interactivity:
+  ========================= -->
+
+<!-- Chart.js (not primary but available for extension) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- PapaParse:
+       Used to load CSV files asynchronously (data ingestion layer)
+       Converts raw CSV → structured JSON objects -->
 
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<!-- Plotly:
+       Main visualization engine for interactive charts -->
 
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-  <link rel="stylesheet" href="style.css"/>
+
+<!-- External stylesheet -->
+  
+<link rel="stylesheet" href="style.css"/>
 </head>
 
 <body>
+<!-- =========================================================
+    HERO SECTION (STATIC + INTRODUCTORY NARRATIVE LAYER)
+    Purpose:
+    Establish research question + user context
+========================================================= -->
 
 <header class="hero">
 
@@ -34,60 +68,75 @@
 
 </header>
 
+<!-- =========================================================
+    INTRO SECTION (THEORETICAL FRAMEWORK)
+    Purpose:
+    Introduces sociological concepts (class, inequality)
+========================================================= -->
+
+
 <div class="intro-section">
-<h3 class="section-title">
-  Introduction
-</h3>
-
-  <p class="intro-text">
-  Sydney is one of Australia's most economically prosperous cities, yet significant social class
-  inequalities persist (Australian Bureau of Statistics [ABS], 2021). Social class influences an
-  individual's life chances, including access to education, employment, income, and housing (Weber, 1978; Bourdieu, 1986).
-  </p>
-
-  <p class="intro-text">
-  In the housing market, property prices in Sydney have increased substantially over the past few decades,
-  making home ownership increasingly difficult for younger generations (Property Carto, 2026). 
-  </p>
-
-  <p class="intro-text">
-  However, not everyone faces the same challenges in entering the housing market. Individuals from different
-  social classes possess unequal access to financial resources, educational opportunities, and family support,
-  all of which can influence their ability to purchase a home.</p>
-
-  <p class="intro-text">
-  By examining socioeconomic indicators and housing data across different areas of Sydney, this website explores
-   who can buy a house first in Sydney and how social class continues to shape home ownership opportunities in 
-   contemporary Australia.</p>
-
-</div>
-
-<hr class="divider">
-  
-<section class="chapter">
-
 <h2 class="section-title">
-Part 1: The Housing Crisis in Sydney
+  Introduction
+</h2>
+
+  <p class="intro-text">
+  Sydney is one of Australia’s most economically prosperous cities, yet significant social class inequalities 
+  remain. Access to <strong>education, income, and housing opportunities </strong> is often shaped by <strong>social 
+  class </strong>(ABS, 2021; Weber, 1978; Bourdieu, 1986).
+  </p>
+
+  <p class="intro-text">
+  At the same time, <strong>housing prices in Sydney</strong> have risen substantially over recent decades, making home ownership 
+  increasingly <strong>difficult for younger generations</strong> (Property Carto, 2026).
+  </p>
+
+  <p class="intro-text">
+  <strong>But not all young people face the same challenges.</strong></p>
+
+  <p class="intro-text">
+By examining socioeconomic indicators and housing data across 
+  Sydney, this website explores:
+  
+  <p class="intro-text">
+  <strong>How social class continues to 
+  influence who can buy a house first in contemporary Australia.</strong></p>
+
+<section class="chapter">
+<hr class="divider">
+<h2 class="section-title">
+Part 1: Sydney's Housing Crisis
 </h2>
 
 <h3 class="section-title">
--	Why is buying a house becoming harder?
+Why are young Australians finding it harder to buy a home?
 </h3>
 </section>
 
 <p class="section-text">
   
-  Housing prices in Sydney have risen substantially over the past several decades, 
+  <strong>Housing prices in Sydney</strong> have risen substantially over the past several decades, 
   significantly outpacing growth in household incomes and contributing to declining housing 
   affordability among younger generations. 
 </p>
 
+<p class="chart-hint">
+💡 Hover over the lines to see exact values. Use ▶ Play to explore changes over time.
+</p>
+<!-- =========================================================
+    CHART 1 (TIME SERIES ANALYSIS)
+    Dependency:
+    - CSV: house_price_income.csv
+    - JS: Plotly + PapaParse
+========================================================= -->
+
 <section class="chart-section">
 
+  <!-- Mounting point for Plotly chart -->
 <div id="priceIncomeChart"></div>
 
+<!-- JS function triggers (defined in script.js) -->
 <div class="chart-controls">
-
     <button onclick="playChart1()">▶ Play</button>
     <button onclick="pauseChart1()">⏸ Pause</button>
 
@@ -96,8 +145,8 @@ Part 1: The Housing Crisis in Sydney
 </section>
 
 <p class="section-text">
-Housing prices have risen much faster than wages, making home ownership increasingly difficult 
-for younger generations.
+<strong>Housing prices</strong> have risen much faster than <strong>wages</strong>, making home ownership increasingly <strong>difficult 
+for younger generations.</strong>
 </p>
 
 <div class="stat-container">
@@ -127,17 +176,17 @@ for younger generations.
 </div>
 
 <p class="section-text">
-Research also shows that parental financial support has become increasingly important for young Australians 
-entering the housing market (Parkinson et al., 2019). Young Australians today are often more dependent on 
-parental assistance to purchase a home than previous generations.</p>
+Research also shows that <strong>parental financial support </strong>has become increasingly important for <strong>young Australians</strong> 
+entering the <strong>housing market</strong> (Parkinson et al., 2019). Young Australians today are often more <strong>dependent on 
+parental assistance</strong> to purchase a home than previous generations.</p>
 
 <p class="section-text">
-  However, not everyone receives the same financial assistance from their parents. 
+  <strong>However, not everyone receives the same financial assistance from their parents. </strong>
 </p>
 
 
-<p class="section-text">Families from more affluent socioeconomic backgrounds are typically able to provide 
-  more financial support, while disadvantaged families usually have fewer resources. </p>
+<p class="section-text">Families from more <strong>affluent socioeconomic backgrounds</strong> are typically able to provide 
+  more financial support, while <strong>disadvantaged families</strong> usually have fewer resources. </p>
 
 <p class="section-text">
   This raises an important question: Do all young people face the same challenges in buying a home?
@@ -155,13 +204,37 @@ Do all young people face the same challenges in buying a home?
 </section>
 
 <p class="section-text">
-IRSAD (Index of Relative Socio-economic Advantage and Disadvantage) is a composite index developed by the Australian 
-Bureau of Statistics to measure the relative socioeconomic conditions of an area. It combines indicators such as:
-income, education, employment, and occupation to identify areas with higher levels of advantage or disadvantage (ABS, 2021).
-</p>
+<strong>IRSAD (Index of Relative Socio-economic Advantage and Disadvantage)</strong> is a composite index developed by the Australian 
+Bureau of Statistics to measure the relative socioeconomic conditions of an area. </p>
 
 <p class="section-text">
-Does a higher IRSAD score correspond to higher educational attainment?</p>
+It combines indicators such as:
+<strong>income, education, employment, and occupation</strong> to identify areas with higher levels of advantage or disadvantage(ABS, 2021).
+</p>
+
+<div class="irsad-box">
+
+    <h4>Quick Guide to IRSAD</h4>
+
+    <p>
+        Higher IRSAD scores indicate greater socioeconomic advantage,
+        while lower scores indicate greater socioeconomic disadvantage.
+    </p>
+
+</div>
+
+<p class="section-text">
+<strong>Does a higher IRSAD score correspond to higher educational attainment?</strong>
+</p>
+<!-- =========================================================
+    CHART 2 (SCATTER PLOT)
+========================================================= -->
+<p class="chart-hint">
+
+💡 Each dot represents a Sydney suburb. Hover to view suburb-level data.
+
+</p>
+
 
 <section class="chart-section">
 
@@ -169,11 +242,27 @@ Does a higher IRSAD score correspond to higher educational attainment?</p>
 
 </section>
 
+<p class="key-insight">
+
+📌 Areas with higher IRSAD scores generally have a much higher proportion of residents holding a bachelor degree or above.
+
+</p>
+
 <p class="section-text">
 
-Residents in socioeconomically advantaged areas are more than twice as likely to hold a bachelor degree or higher 
-qualification than residents in disadvantaged areas. Higher educational attainment is associated with better 
+Residents in <strong>socioeconomically advantaged areas</strong> are more than twice as likely to hold a <strong>bachelor degree or higher 
+qualification</strong> than residents in <strong>disadvantaged areas.</strong></p>
+
+<p class="section-text">
+Higher educational attainment is associated with better 
 employment opportunities and higher incomes, increasing the capacity to enter the housing market (ABS, 2021).</p>
+<!-- =========================================================
+    CHART 3 (SCATTER PLOT)
+========================================================= -->
+
+<p class="chart-hint">
+💡 Hover to compare IRSAD scores with homeownership rates across suburbs. 
+</p>
 
 <section class="chart-section">
 
@@ -181,14 +270,23 @@ employment opportunities and higher incomes, increasing the capacity to enter th
 
 </section>
 
+<p class="key-insight">
+
+📌 Socioeconomically advantaged areas also tend to have higher rates of home ownership.
+
+</p>
+
 <p class="section-text">
-Educational attainment and income explain part of the inequality in homeownership. 
-However, research suggests that family background continues to matter even after 
-individuals achieve similar educational qualifications and earnings (Mendolia & Siminski, 2016). 
+Educational attainment and income explain part of the inequality in homeownership. </p>
+<p class="section-text">
+However, research suggests that <strong>family background</strong> continues to matter even after 
+individuals achieve <strong>similar educational qualifications and earnings</strong> (Mendolia & Siminski, 2016). </p>
+
+<p class="section-text">
 This means family background can provide a significant advantage when purchasing a home.</p>
 
 <p class="section-text">
-If abilities are equal but family backgrounds differ, how does this affect homeownership?</p>
+<strong>If abilities are equal but family backgrounds differ, how does this affect homeownership?</strong></p>
 
 
 <section class="chapter">
@@ -198,48 +296,117 @@ Part 3: Family Background Matters
 </h2>
 
 <h3 class="section-title">
-What if two people have the same degrees, who can buy the house first?
+When ability is equal, does family wealth matter?
 </h3>
 </section>
 
 <p class="section-text">
-The research shows that intergenerational advantage, such as gifted deposits, will be a 
-big help for youth who need to buy a house (Lovenheim & Reynolds, 2013). To understand the impact of family wealth, 
-imagine two individuals with identical education, occupations, and incomes.</p>
+The research shows that <strong>intergenerational advantage</strong>, such as gifted deposits, will be a 
+big help for youth who need to <strong>buy a house</strong> (Lovenheim & Reynolds, 2013).</p>
+<p class="section-text">
+To understand the impact of family wealth, imagine two individuals with identical education, occupations, and incomes.</p>
 
 <p class="section-text">
-What if two people have the same education, occupation, and income? Who can buy a home first in Sydney</p>
+<strong>What if two people have the same education, occupation, and income? Who can buy a home first in Sydney?</strong></p>
+
+<p class="section-text">
+
+The only difference is that Person A receives
+financial assistance from their parents for a
+<strong>housing deposit</strong>.
+
+</p>
+<!-- =========================================================
+    Chart4: SIMULATION (AGENT-BASED VISUAL MODEL)
+    Concept:
+    - Person A = wealth advantaged (inheritance support)
+    - Person B = no support
+    - Same income trajectory
+========================================================= -->
+
+<p class="chart-hint">
+💡 Press ▶ Play to simulate how wealth differences affect home ownership timing.
+</p>
 
 <section class="chart-section">
 
-<p class="Chart4-title">
-    Deposit Advantage VS No Deposit
-</p>
+    <p class="Chart4-title">
+        Parental Deposit Support VS No Family Assistance
+    </p>
 
-<div class="race-container">
+    <div class="race-container">
+<!-- A and B are dynamically moved via JS (DOM manipulation) -->
 
-    <div class="track">
+        <div class="track">
 
-      <div id="runnerA" class="runner runnerA">
-    👩 A
-    <div class="money" id="moneyA"></div>
-</div>
+            <!-- Person A -->
 
-<div id="runnerB" class="runner runnerB">
-    👩 B
-    <div class="money" id="moneyB"></div>
-</div>
+            <div id="runnerA" class="runner runnerA">
 
-        <div class="house">🏠 $3.5M</div>
+                <div class="age-label" id="ageA">
+                    Age 25
+                </div>
+
+                👩 A
+
+            </div>
+
+            <!-- House -->
+
+            <div class="house">
+
+                🏠
+
+                <div class="house-label">
+                    $3.5M House
+                </div>
+
+            </div>
+
+            <!-- Person B -->
+
+            <div id="runnerB" class="runner runnerB">
+
+                <div class="age-label" id="ageB">
+                    Age 25
+                </div>
+
+                👩 B
+
+            </div>
+
+        </div>
+
+        <div class="wealth-panel">
+
+            <div id="moneyA">
+                A Wealth: $700,000 (got deposit)
+            </div>
+
+            <div id="moneyB">
+                B Wealth: $0 (no deposit)
+            </div>
+
+        </div>
+<!-- Simulation controls (bind to JS functions) -->
+
+        <div class="chart-controls">
+
+            <button onclick="playRace()">
+                ▶ Play
+            </button>
+
+            <button onclick="pauseRace()">
+                ⏸ Pause
+            </button>
+
+            <button onclick="resetRace()">
+                ↺ Reset
+            </button>
+
+        </div>
 
     </div>
-
-    <div class="chart-controls">
-        <button onclick="playRace()">▶ Play</button>
-        <button onclick="pauseRace()">⏸ Pause</button>
-    </div>
-
-</div>
 
 </section>
 
@@ -248,25 +415,57 @@ This is Intergenerational Advantage: Wealth and housing opportunities are often 
 
 <div class="conclusion-box"></div>
 
+<div class="takeaway-box">
+
+<h2>Key Takeaway</h2>
+
+<p>
+
+In Sydney, home ownership is shaped not only by
+individual effort, but also by social class,
+education, and intergenerational wealth.
+
+</p>
+
+</div>
+
 <h2 class="section-title">
 Conclusion
 </h2>
 
 <p class="section-text">
-In Sydney, young people from socioeconomically advantaged families are generally able to purchase homes 
-earlier than those from disadvantaged backgrounds. While rising house prices affect all Australians, 
-access to education, income, and intergenerational wealth provides some groups with a significant head 
-start. In contemporary Sydney, home ownership is shaped not only by individual effort, but also by the 
-social class into which a person is born.</p>
+In Sydney, young people from <strong>socioeconomically advantaged families</strong> are generally able to purchase homes 
+earlier than those from <strong>disadvantaged backgrounds</strong>. </p>
+<p class="section-text">
+While rising house prices affect all Australians, access to <strong>education, income, and intergenerational wealth</strong> provides some 
+groups with a significant head start. </p>
+<p class="section-text">
+In contemporary Sydney, home ownership is shaped not only by individual effort, but also by the 
+<strong>social class</strong> into which a person is born.</p>
+
+<h2 class="section-title">
+Therefore
+</h2>
+
+<p class="section-text">
+Understanding housing inequality requires more than just focusing on <strong>individual effort</strong>. Homeownership 
+affordability depends not only on individual achievement but also on the unequal starting lines created by <strong>class 
+inequality.</strong> </p>
+<p class="section-text">
+ As housing affordability continues to decline, <strong>addressing these inequalities will remain a significant 
+challenge for Australia in the future.</strong></p>
+<!-- =========================================================
+    MAIN LOGIC FILE (CORE BEHAVIOR ENGINE)
+========================================================= -->
 
 <script src="script.js"></script>
 
-</div>
-  
+ </div>
+
 <footer class="footer">
 
     <p>
-        Data sources: ABS, CoreLogic, SEIFA (IRSAD)
+        Data sources: ABS, Property Carto, SEIFA (IRSAD)
     </p>
 
     <p>
